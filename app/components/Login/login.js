@@ -51,9 +51,10 @@ class Login extends Component {
                         />
                     </View>
                     <TouchableOpacity
+                        style={styles.button}
                         onPress={this.click}
                     >
-                        <Text>{"Hola"}</Text>
+                        <Text style={styles.buttonText  }>{"Login"}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
