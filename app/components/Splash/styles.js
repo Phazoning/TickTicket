@@ -2,6 +2,6 @@ import {StyleSheet, Dimensions} from 'react-native';
 
 
 export default StyleSheet.create({
-    body: {alignItems:"center"},
+    body: {flex: 1, justifyContent:"center"},
     logo: {alignSelf: "center"}
 })

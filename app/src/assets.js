@@ -1,5 +1,5 @@
 let assets = {
-    logoImage: require("logo.png")
+    logoImage: require("./logo.png")
 }
 
 export default assets
