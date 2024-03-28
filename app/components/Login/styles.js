@@ -10,29 +10,27 @@ export default StyleSheet.create({
         paddingHorizontal: "3%"
     },
     item: {
-        flewidth: 1,
+        flex: 1,
         textAlign: "center"
     },
     textItem: {
         marginVertical: "5%",
         marginHorizontal: "10%",
         fontWeight: "bold",
-        color: "#000000",
         fontFamily: "arial",
-        fontSize: height * 0.05   
+        fontSize: 0.08 * width,
+        color: "#000000"
     },
     textInputItem: {
-        fontFamily: "arial",
         marginVertical: "5%",
         marginHorizontal: "10%",
         borderColor: "#000000",
-        color: "#5A716B",
         borderWidth: 2,
-        color: "#"
+        color: "#898B86"
     },
     button: {
         alignContent: "center",
-        borderColor: "#000000",
+        borderColor: "black",
         borderLeftWidth: 0.006 * width,
         borderRightWidth: 0.006 * width,
         borderTopWidth: 0.0038 * height,
@@ -40,8 +38,7 @@ export default StyleSheet.create({
         borderRadius: 10
     },
     buttonText: {
-        fontFamily: "arial",
         alignSelf: "center",
-        fontWeight: "bolder"   
+        fontWeight: "bold"   
     }
 })
