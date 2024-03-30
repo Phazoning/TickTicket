@@ -19,6 +19,8 @@ class Splash extends Component {
 
     componentDidMount(){
         if (!this.state.loading) {
+            this.props.getArticles();
+            this.props.getIncidents();
             this.sleep(2000).then(() => {
                 this.setState({
                     loading: true
@@ -28,7 +30,7 @@ class Splash extends Component {
     }
 
     componentDidUpdate(){
-        if (this.state.loading){
+        if (this.state.loading && this.props.articles != [] && this.props.incidents != []){
             this.goToLogin();
         }
     }
@@ -56,8 +58,8 @@ class Splash extends Component {
 
 function mapStateToProps(state, props) {
     return {
-      incidents: state.dataReducer.incidents,
-      articles: state.dataReducer.articles
+      incidents: state.reducer.incidents,
+      articles: state.reducer.articles
     };
   }
   

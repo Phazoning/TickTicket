@@ -1,3 +1,5 @@
+import {combineReducers} from 'redux';
+
 import GET_USER from "./actions";
 import GET_INCIDENTS from "./actions";
 import GET_ARTICLES from "./actions";
@@ -35,4 +37,8 @@ const initialState = {
     incidents: []
 };
 
-export default reducer
+const rootReducer = combineReducers({
+    reducer,
+  });
+  
+  export default rootReducer;

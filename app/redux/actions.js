@@ -17,13 +17,18 @@ export  function getUser(user){
             returnUser = e
         }
     }
-    dispatch({type: GET_USER, data: returnUser})
+    return (dispatch) => {
+        dispatch({type: GET_USER, data: returnUser})
+    }
 }
 
 export function getArticles(){
     let returnArray = []
     returnArray = mock.articles
-    dispatch({type: GET_ARTICLES, data: returnArray})
+    
+    return (dispatch) => {
+        dispatch({type: GET_ARTICLES, data: returnArray})
+    }
 }
 
 export function getIncidents(status){
@@ -33,7 +38,10 @@ export function getIncidents(status){
             returnArray.push(e)
         }
     }
-    dispatch({type: GET_INCIDENTS, data: returnArray})
+    
+    return (dispatch) => {
+        dispatch({type: GET_INCIDENTS, data: returnArray})
+    }
 }
 
 /**
