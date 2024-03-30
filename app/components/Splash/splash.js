@@ -3,6 +3,9 @@ import {View, Image} from 'react-native';
 import styles from "./styles";
 import assets from "../../src/assets";
 import {CommonActions} from '@react-navigation/native';
+import * as ReduxActions from '../../redux/actions'
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class Splash extends Component {
 
@@ -51,4 +54,15 @@ class Splash extends Component {
     }
 }
 
-export default Splash
+function mapStateToProps(state, props) {
+    return {
+      incidents: state.dataReducer.incidents,
+      articles: state.dataReducer.articles
+    };
+  }
+  
+  function mapDispatchToProps(dispatch) {
+    return bindActionCreators(ReduxActions, dispatch);
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Splash);
