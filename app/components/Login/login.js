@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
 import {View, Image, Text, TextInput, TouchableOpacity} from 'react-native';
 import styles from "./styles";
-import assets from "../../src/assets";
+import * as ReduxActions from '../../redux/actions'
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {CommonActions} from '@react-navigation/native';
 
 class Login extends Component {
 
@@ -19,7 +22,18 @@ class Login extends Component {
     }
 
     click = () => {
-        console.log("Hola")
+        this.props.getUser(this.state.user, this.state.pass)
+        this.goToIncidents()
+    }
+
+    goToIncidents = () => {
+        if (this.props.user) {
+            const resetAction = CommonActions.reset({
+                index: 0,
+                routes: [{name: 'incidents'}],
+              });
+            this.props.navigation.dispatch(resetAction);
+        }
     }
 
     render (){
@@ -62,4 +76,14 @@ class Login extends Component {
     }
 }
 
-export default Login
+function mapStateToProps(state, props) {
+    return {
+      user: state.reducer.user
+    };
+  }
+  
+  function mapDispatchToProps(dispatch) {
+    return bindActionCreators(ReduxActions, dispatch);
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Login);

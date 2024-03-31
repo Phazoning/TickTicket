@@ -1,10 +1,15 @@
 import {combineReducers} from 'redux';
 
-import GET_USER from "./actions";
-import GET_INCIDENTS from "./actions";
-import GET_ARTICLES from "./actions";
-import ALTER_INCIDENT from "./actions";
-import USER_IS_LOGGED from "./actions";
+import {
+    GET_USER, 
+    GET_INCIDENTS,
+    GET_ARTICLES,
+    ALTER_INCIDENT,
+    USER_IS_LOGGED,
+    SET_INCIDENT_FOR_DETAIL,
+    CLEANSE_INCIDENT_DETAIL,
+    REFRESH_INCIDENT_DETAIL
+} from "./actions";
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
@@ -26,6 +31,25 @@ const reducer = (state = initialState, action) => {
             });
             return state;
         }
+        case SET_INCIDENT_FOR_DETAIL: {
+            state = Object.assign({}, state, {
+                incidentDetail: action.data,
+            });
+            return state;
+        }
+
+        case CLEANSE_INCIDENT_DETAIL: {
+            state = Object.assign({}, state, {
+                incidentDetail: action.data,
+            });
+            return state;
+        }
+        case REFRESH_INCIDENT_DETAIL: {
+            state = Object.assign({}, state, {
+                incidentDetail: action.data,
+            });
+            return state;
+        }
         default:
             return state
     }
@@ -34,7 +58,8 @@ const reducer = (state = initialState, action) => {
 const initialState = {
     user: null,
     articles: [],
-    incidents: []
+    incidents: [],
+    incidentDetail: null
 };
 
 const rootReducer = combineReducers({
