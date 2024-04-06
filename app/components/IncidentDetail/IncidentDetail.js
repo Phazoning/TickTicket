@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Image, Text, TextInput, TouchableOpacity, ScrollView} from 'react-native';
+import {SafeAreaView, View, Image, Text, TextInput, TouchableOpacity, ScrollView} from 'react-native';
 import styles from "./styles";
 import * as ReduxActions from '../../redux/actions'
 import {bindActionCreators} from 'redux';
@@ -15,8 +15,14 @@ class IncidentDetail extends Component {
         this.state = {
             assignedTo: this.props.incidentDetail["person in charge"],
             status: this.props.incidentDetail.status,
-            comments: this.props.incidentDetail.comments
+            comments: this.props.incidentDetail.comments,
+            isButtonEnabled: false
         };
+    }
+
+
+    componentWillUnmount(){
+        this.props.cleanseIncidentDetail();
     }
 
     goBack = () => {
@@ -41,9 +47,8 @@ class IncidentDetail extends Component {
     }
     
     render (){
-        console.log(this.state)
         return(
-            <View style={styles.body}>
+            <SafeAreaView style={styles.body}>
                 <View style = {styles.header}>
                     <TouchableOpacity
                         onPress={this.goBack}
@@ -57,7 +62,7 @@ class IncidentDetail extends Component {
                     <View style={styles.statusView}>
                         <View style={styles.userColumn}>
                             <View style={styles.columnSection}>
-                                <Text style={styles.sectionText}>{"Asignado a: "}</Text>
+                                <Text style={styles.sectionText}>{"Asignado a:  "}</Text>
                                 <Text style={styles.contentText}>{this.props.incidentDetail["person in charge"]}</Text>
                             </View>
                             {
@@ -92,7 +97,7 @@ class IncidentDetail extends Component {
                             </View>
                             <View style={styles.columnSection}>
                                 <Text style={styles.sectionText}>{"Abierta: "}</Text>
-                            {false && <Text style={styles.contentText}>{this.props.incidentDetail.opened.split("T")[1]}</Text>}
+                            <Text style={styles.contentText}>{this.props.incidentDetail.opened.split("T")[1]}</Text>
                             </View>
                             {
                                 this.props.incidentDetail.status == "Closed" &&
@@ -104,6 +109,7 @@ class IncidentDetail extends Component {
                         </View>
                     </View>
                     <TextInput
+                        multiline={true}
                         style={styles.textInput}
                         onChangeText={(text) => {
                             this.setState({
@@ -114,16 +120,17 @@ class IncidentDetail extends Component {
                     />
                     <TouchableOpacity
                         onPress={() => {
-                            this.props.alterIncident(this.state)
-                            this.props.refreshIncidentDetail(this.props.incidentDetail.incident)    
+                            if(this.state.isButtonEnabled){
+                                this.props.alterIncident(this.state)
+                            }   
                         }}
                         style={[styles.sendButton, this.ischanged() ? styles.sendButtonEnabled : styles.sendButtonDisabled]}
-                        disabled={this.ischanged()}
+                        disabled={this.state.isButtonEnabled}
                     >
                         <Text style={styles.sendButtonText}>{"Modificar"}</Text>
                     </TouchableOpacity>
                 </ScrollView>
-            </View>
+            </SafeAreaView>
         )
     }   
 }

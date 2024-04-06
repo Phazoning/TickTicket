@@ -3,12 +3,12 @@ import {StyleSheet, Dimensions} from 'react-native';
 const { width, height} = Dimensions.get('window');
 
 export default StyleSheet.create({
-    body: {flex: 1, alignItems:"center", justifyContent:"center"},
+    body: {flex: 1,paddingHorizontal: 0.1*width},
     header: {
         justifyContent: "space-between",
         flexDirection: "row",
         height: height*0.1,
-        backgroundColor: '#FF0000'
+        backgroundColor: '#FF0000',
     },
     headerText: {
         fontSize: 0.001* height,
@@ -27,8 +27,7 @@ export default StyleSheet.create({
         resizeMode: 'contain'
     },
     core: {
-        height: height*0.9,
-        padding: 2
+        height: height*0.9
     },
     incidentIdText: {
         fontFamily: 'arial',
@@ -39,7 +38,9 @@ export default StyleSheet.create({
     },
     statusView: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
+        flex: 2,
+        width: "100%"
     },
     sendButtonEnabled: {
         backgroundColor: "#4E4FD5"
@@ -50,40 +51,47 @@ export default StyleSheet.create({
     sendButton: {
         paddingVertical: 0.05*height,
         paddingHorizontal: 0.08*width,
-        borderRadius: 25
+        borderRadius: 25,
+        bottom: 0,
+        textAlign: "center"
     },
     sendButtonText: {
         fontFamily: 'arial',
-        fontSize: 0.08*height,
-        color: "#000000"
+        fontSize: 0.05*height,
+        color: "#000000",
+        alignSelf: "center"
     },
     textInput: {
         borderWidth: 5,
-        borderColor: "#FFFFFF"
+        borderColor: "#FFFFFF",
+        borderRadius: 15,
+        backgroundColor: "#FFFFFF",
+        flex: 7,
+        width: "100%"
     },
     userColumn: {
-        flex: 1,
+        flex: 9,
         flexDirection: "column",
         paddingRight: 0.1*width,
         paddingLeft: 0.01*width,
         paddingVertical: 0.025*height
     },
     statusColumn: {
-        flex: 1,
+        flex: 15,
         flexDirection: "column",
-        paddingRight: 0.01*width,
+        paddingRight: 0.008*width,
         paddingLeft: 0.1*width,
         paddingVertical: 0.025*height
     },
 
     sectionText: {
-        fontFamily: 'bold',
-        fontSize: 0.02*height,
+        fontWeight: 'bold',
+        fontSize: 0.018*height,
         fontFamily: 'arial',
-        alignSelf: "center"
     },
     contentText: {
-        fontSize: 0.018*height,
+        fontSize: 0.015*height,
+        fontWeight: 'bold',
         fontFamily: 'arial',
         alignSelf: "center"
     },
@@ -94,8 +102,9 @@ export default StyleSheet.create({
     },
     pickerStyle: {
         height: 0.02*height,
-        fontSize: 0.13*height,
         fontFamily: 'arial',
-        width: 0.15*width
+        width: 0.15*width,
+        flex: 1,
+        backgroundColor: "#FFFFFF"
     }
 })

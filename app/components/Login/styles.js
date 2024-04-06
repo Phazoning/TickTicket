@@ -5,7 +5,7 @@ const { width, height} = Dimensions.get('window');
 export default StyleSheet.create({
     body: {flex: 1, alignItems:"center", justifyContent:"center"},
     itemsView: {
-        justifyContent: "space-between",
+        justifyContent: "center",
         paddingVertical: "30%",
         paddingHorizontal: "3%"
     },
@@ -39,6 +39,7 @@ export default StyleSheet.create({
     },
     buttonText: {
         alignSelf: "center",
-        fontWeight: "bold"   
+        fontWeight: "bold", 
+        minHeight: 0.015*height
     }
 })

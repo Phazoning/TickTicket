@@ -26,7 +26,7 @@ export default StyleSheet.create({
         resizeMode: 'contain'
     },
     picker:{
-        flex: 1,
+        flex: 2,
         borderWidth: 5,
         marginLeft: 0.2*width,
         backgroundColor: "#FFFFFF"

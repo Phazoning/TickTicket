@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Image, Text, TextInput, TouchableOpacity} from 'react-native';
+import {SafeAreaView ,View, Image, Text, TextInput, TouchableOpacity} from 'react-native';
 import styles from "./styles";
 import * as ReduxActions from '../../redux/actions'
 import {bindActionCreators} from 'redux';
@@ -38,7 +38,7 @@ class Login extends Component {
 
     render (){
         return(
-            <View style={styles.body}>
+            <SafeAreaView style={styles.body}>
                 <View style={styles.itemsView}>
                     <View style={styles.item}>
                         <Text style={styles.textItem}>{"Usuario:"}</Text>
@@ -55,6 +55,7 @@ class Login extends Component {
                     <View style={styles.item}>
                         <Text style={styles.textItem}>{"Contraseña:"}</Text>
                         <TextInput
+                            secureTextEntry={true}
                             style={styles.textInputItem}
                             placeholder="Contraseña"
                             onChangeText={(text) => {
@@ -71,7 +72,7 @@ class Login extends Component {
                         <Text style={styles.buttonText  }>{"Login"}</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </SafeAreaView>
         )
     }
 }

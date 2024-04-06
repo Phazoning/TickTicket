@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Image, Text, TextInput, TouchableOpacity, FlatList} from 'react-native';
+import {SafeAreaView, View, Image, Text, TextInput, TouchableOpacity, FlatList} from 'react-native';
 import styles from "./styles";
 import * as ReduxActions from '../../redux/actions'
 import {bindActionCreators} from 'redux';
@@ -46,7 +46,7 @@ class Incidents extends Component {
     }
     render (){
         return(
-            <View style={styles.body}>
+            <SafeAreaView style={styles.body}>
                 <View style = {styles.header}>
                     <TouchableOpacity
                         onPress={this.refresh}
@@ -58,7 +58,9 @@ class Incidents extends Component {
                         selectedValue={this.state.status}
                         onValueChange={
                             (itemValue, itemIndex) => {
+                                console.log(itemValue)
                                 this.setState({status: itemValue})
+                                this.props.getIncidents(itemValue)
                             }
                         }
                         style={styles.picker}
@@ -87,7 +89,7 @@ class Incidents extends Component {
                         )}
                     />
                 </View>
-            </View>
+            </SafeAreaView>
         )
     }   
 }
