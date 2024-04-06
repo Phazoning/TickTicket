@@ -3,6 +3,9 @@ import {View, Image} from 'react-native';
 import styles from "./styles";
 import assets from "../../src/assets";
 import {CommonActions} from '@react-navigation/native';
+import * as ReduxActions from '../../redux/actions'
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 class Splash extends Component {
 
@@ -16,6 +19,8 @@ class Splash extends Component {
 
     componentDidMount(){
         if (!this.state.loading) {
+            this.props.getArticles();
+            this.props.getIncidents();
             this.sleep(2000).then(() => {
                 this.setState({
                     loading: true
@@ -25,7 +30,7 @@ class Splash extends Component {
     }
 
     componentDidUpdate(){
-        if (this.state.loading){
+        if (this.state.loading && this.props.articles != [] && this.props.incidents != []){
             this.goToLogin();
         }
     }
@@ -51,4 +56,15 @@ class Splash extends Component {
     }
 }
 
-export default Splash
+function mapStateToProps(state, props) {
+    return {
+      incidents: state.reducer.incidents,
+      articles: state.reducer.articles
+    };
+  }
+  
+  function mapDispatchToProps(dispatch) {
+    return bindActionCreators(ReduxActions, dispatch);
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Splash);

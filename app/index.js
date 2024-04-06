@@ -6,8 +6,10 @@ import { NavigationContainer, CommonActions, useRoute } from "@react-navigation/
 import { createDrawerNavigator, DrawerContentScrollView } from "@react-navigation/drawer"
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Splash from "./components/Splash/splash";
-import Login from "./components/Login/login"
-
+import Login from "./components/Login/login";
+import Incidents from './components/Incidents/Incidents';
+import IncidentDetail from './components/IncidentDetail/IncidentDetail'
+import { act } from 'react-test-renderer';
 const Drawer = createDrawerNavigator();
 const getActiveRouteName = (state) => {
     const route = state.routes[state.index];
@@ -30,6 +32,19 @@ class Main extends Component {
     componentDidMount(){
     }
 
+    customDrawerContent(props){
+        let actualRoute = ""
+        if (props.state.routes[0].state) {
+            actualRoute = props.state.routes[0].name;
+        }
+
+        let isIncidents = actualRoute === "incidents"
+        let isKnowledge = actualRoute === "knowledge"
+        let isUsers = actualRoute === "users"
+
+        return (<></>)
+    }
+
     render(){
         return(
             <SafeAreaProvider>
@@ -45,6 +60,8 @@ class Main extends Component {
                     >
                     <Drawer.Screen name="splash" component={Splash} />
                     <Drawer.Screen name="login" component={Login} />
+                    <Drawer.Screen name="incidents" component={Incidents}/>
+                    <Drawer.Screen name="incidentDetail" component={IncidentDetail}/>
                 </Drawer.Navigator>
                 </NavigationContainer>
             </SafeAreaProvider>
