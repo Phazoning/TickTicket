@@ -6,9 +6,12 @@ export const USER_IS_LOGGED = "USER_IS_LOGGED";
 export const SET_INCIDENT_FOR_DETAIL = "SET_INCIDENT_FOR_DETAIL"; 
 export const CLEANSE_INCIDENT_DETAIL = "CLEANSE_INCIDENT_DETAIL";
 export const REFRESH_INCIDENT_DETAIL = "REFRESH_INCIDENT_DETAIL";
+export const GET_USERS_FROM_AUTHUSER = "GET_USERS_FROM_AUTHUSER";
+export const CLEANSE_USER_DETAIL = "CLEANSE_USER_DETAIL"; 
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import mock from "../src/mock_data";
-
+import storage from "../storage/storage";
 
 /**
  * All these functions are to be changed to use the API on the last stage of development
@@ -27,6 +30,7 @@ export  function getUser(user, password){
         dispatch({type: GET_USER, data: returnUser})
     }
 }
+
 
 export function getArticles(){
     let returnArray = []
@@ -63,13 +67,6 @@ export function cleanseIncidentDetail(){
     }
 }
 
-/**
- * Implement once AsyncStorage has been fully implemented on the app
- */
-export function userIsLogged(){
-
-}
-
 /** 
  * Implement with the API implementation, as changes won't be able to be done before that
 */
@@ -88,6 +85,28 @@ export function refreshIncidentDetail(incidentId){
     }
     return (dispatch) => {
         dispatch({type: REFRESH_INCIDENT_DETAIL, data: item})
+    }
+}
+
+export function getUsersFromAuthUser(authUser, targetUser) {
+    
+    let returnUser = null
+    if (authUser) {
+        for (e in mock.users) {
+            if (e.user == targetUser) {
+                returnUser = e
+            }
+        }
+    }
+
+    return (dispatch) => {
+        dispatch({type: GET_USERS_FROM_AUTHUSER, data: returnUser})
+    }
+}
+
+export function cleanseUserDetail(){
+    return (dispatch) => {
+        dispatch({type: CLEANSE_USER_DETAIL, data: null})
     }
 }
 

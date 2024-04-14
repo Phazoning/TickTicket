@@ -3,7 +3,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 const { width, height} = Dimensions.get('window');
 
 export default StyleSheet.create({
-    body: {flex: 1,paddingHorizontal: 0.1*width},
+    body: {flex: 1},
     header: {
         justifyContent: "space-between",
         flexDirection: "row",
@@ -27,7 +27,8 @@ export default StyleSheet.create({
         resizeMode: 'contain'
     },
     core: {
-        height: height*0.9
+        height: height*0.9,
+        paddingHorizontal: 0.1*width
     },
     incidentIdText: {
         fontFamily: 'arial',

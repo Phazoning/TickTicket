@@ -5,6 +5,7 @@ import * as ReduxActions from '../../redux/actions'
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {CommonActions} from '@react-navigation/native';
+import storage from '../../storage/storage';
 
 class Login extends Component {
 
@@ -22,12 +23,24 @@ class Login extends Component {
     }
 
     click = () => {
-        this.props.getUser(this.state.user, this.state.pass)
         this.goToIncidents()
     }
 
     goToIncidents = () => {
+        this.props.getUser(this.state.user, this.state.pass)
         if (this.props.user) {
+
+            storage.save({
+                key: "user",
+                id: "name",
+                data: this.state.user
+            })
+
+            storage.save({
+                key: "user",
+                id: "pass",
+                data: this.state.pass
+            })
             const resetAction = CommonActions.reset({
                 index: 0,
                 routes: [{name: 'incidents'}],

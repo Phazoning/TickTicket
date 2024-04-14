@@ -9,7 +9,12 @@ import Splash from "./components/Splash/splash";
 import Login from "./components/Login/login";
 import Incidents from './components/Incidents/Incidents';
 import IncidentDetail from './components/IncidentDetail/IncidentDetail'
-import { act } from 'react-test-renderer';
+import styles from "./styles"
+import {Text, TouchableOpacity} from 'react-native';
+import Users from './components/Users/Users';
+
+
+
 const Drawer = createDrawerNavigator();
 const getActiveRouteName = (state) => {
     const route = state.routes[state.index];
@@ -39,10 +44,51 @@ class Main extends Component {
         }
 
         let isIncidents = actualRoute === "incidents"
-        let isKnowledge = actualRoute === "knowledge"
+        //let isKnowledge = actualRoute === "knowledge"
         let isUsers = actualRoute === "users"
-
-        return (<></>)
+        return (
+            <DrawerContentScrollView {...props} style={styles.drawer}>
+                <TouchableOpacity
+                    style={[styles.button, isIncidents ? styles.buttonIN : styles.buttonNIN]}
+                    onPress={
+                        () => {
+                            const resetAction = CommonActions.reset({
+                            index: 0,
+                            routes: [{name: 'incidents'}],
+                            });
+                            props.navigation.dispatch(resetAction);
+                            props.navigation.closeDrawer();
+                        }
+                    }
+                >
+                    <Text
+                        styles={[styles.buttonText, isIncidents ? styles.textIN : styles.textNIN]}
+                    >
+                        {"incidents"}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[styles.button, isIncidents ? styles.buttonIN : styles.buttonNIN]}
+                    onPress={
+                        () => {
+                            const resetAction = CommonActions.reset({
+                            index: 0,
+                            routes: [{name: 'users'}],
+                            });
+                            props.navigation.dispatch(resetAction);
+                            props.navigation.closeDrawer();
+                        }
+                    }
+                >
+                    <Text
+                        styles={[styles.buttonText, isIncidents ? styles.textIN : styles.textNIN]}
+                    >
+                        {"users"}
+                    </Text>
+                </TouchableOpacity>
+                
+            </DrawerContentScrollView>
+        )
     }
 
     render(){
@@ -53,15 +99,18 @@ class Main extends Component {
                     const currentRouteName = getActiveRouteName(state);
                 }}>
                 <Drawer.Navigator
+                    drawerContent={(props) => this.customDrawerContent(props)}
                     initialRouteName="splash"
                     screenOptions={{
-                        headerShown: false
+                        headerShown: false,
+                        drawerType: "front"
                     }}
                     >
                     <Drawer.Screen name="splash" component={Splash} />
                     <Drawer.Screen name="login" component={Login} />
                     <Drawer.Screen name="incidents" component={Incidents}/>
                     <Drawer.Screen name="incidentDetail" component={IncidentDetail}/>
+                    <Drawer.Screen name="users" component={Users}/>
                 </Drawer.Navigator>
                 </NavigationContainer>
             </SafeAreaProvider>
