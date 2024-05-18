@@ -8,7 +8,9 @@ import {
     USER_IS_LOGGED,
     SET_INCIDENT_FOR_DETAIL,
     CLEANSE_INCIDENT_DETAIL,
-    REFRESH_INCIDENT_DETAIL
+    REFRESH_INCIDENT_DETAIL,
+    GET_USERS_FROM_AUTHUSER,
+    CLEANSE_USER_DETAIL
 } from "./actions";
 
 const reducer = (state = initialState, action) => {
@@ -50,6 +52,18 @@ const reducer = (state = initialState, action) => {
             });
             return state;
         }
+        case GET_USERS_FROM_AUTHUSER: {
+            state = Object.assign({}, state, {
+                userDetail: action.data,
+            });
+            return state;
+        }
+        case CLEANSE_USER_DETAIL: {
+            state = Object.assign({}, state, {
+                userDetail: action.data,
+            });
+            return state;
+        }
         default:
             return state
     }
@@ -59,7 +73,8 @@ const initialState = {
     user: null,
     articles: [],
     incidents: [],
-    incidentDetail: null
+    incidentDetail: null,
+    userDetail: null
 };
 
 const rootReducer = combineReducers({

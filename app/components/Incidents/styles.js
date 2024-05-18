@@ -8,7 +8,9 @@ export default StyleSheet.create({
         justifyContent: "space-evenly",
         flexDirection: "row",
         height: height*0.1,
-        backgroundColor: '#FF0000'
+        backgroundColor: '#FF0000',
+        paddingVertical: 0.02*height,
+        paddingHorizontal: 0.03*width
     },
     headerText: {
         fontSize: 0.001* height,
@@ -51,5 +53,10 @@ export default StyleSheet.create({
         fontFamily: 'arial',
         fontStyle: 'italic',
         fontSize: 0.015*height
+    },
+    drawerButton: {
+        alignSelf: "center",
+        flex: 1,
+        marginLeft: 0.02*width
     }
 })

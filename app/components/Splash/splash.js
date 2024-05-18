@@ -6,6 +6,7 @@ import {CommonActions} from '@react-navigation/native';
 import * as ReduxActions from '../../redux/actions'
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import storage from '../../storage/storage';
 
 class Splash extends Component {
 
@@ -13,31 +14,58 @@ class Splash extends Component {
         super(props);
     
         this.state = {
-            loading: false
+            loading: true,
+            user: null,
+            pass: null
         };
     }
 
-    componentDidMount(){
-        if (!this.state.loading) {
-            this.props.getArticles();
-            this.props.getIncidents();
-            this.sleep(2000).then(() => {
-                this.setState({
-                    loading: true
-                })
+    async componentDidMount(){
+        this.props.getArticles()
+        await storage.load({
+            key: "user",
+            id: "name"
+        }).then(ret => {
+            this.setState({user: ret})
+        }).catch(err => {
+            console.log(err)
+            this.setState({
+                user:""
             })
-        }
+        })
+        await storage.load({
+            key: "user",
+            id: "pass"
+        }).then(ret => {
+            this.setState({pass: ret})
+        }).catch(err => {
+            console.log(err)
+            this.setState({
+                pass:""
+            })
+        })
     }
 
     componentDidUpdate(){
-        if (this.state.loading && this.props.articles != [] && this.props.incidents != []){
-            this.goToLogin();
+        if (
+            this.state.pass != null && this.state.pass != ""
+            && this.state.user != null && this.state.user != ""
+        ){
+            this.props.getUser(this.state.user, this.state.pass)
+            this.setState({
+                loading: false
+            })
+        } else if (this.state.pass == "" && this.state.user == ""){
+            this.setState({
+                loading: false
+            })
         }
-    }
 
-    /**delete this and calls when redux is set */
-    sleep = (ms) => {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        if (this.props.articles != [] && this.props.incidents != [] && this.props.user != null){
+            this.gotoIncidents();
+        } else if (this.props.articles != [] && this.props.incidents != [] && !this.state.loading){
+            this.goToLogin();
+        } 
     }
 
     goToLogin = () => {
@@ -46,6 +74,14 @@ class Splash extends Component {
             routes: [{name: 'login'}],
           });
           this.props.navigation.dispatch(resetAction);
+    }
+
+    gotoIncidents = () => {
+        const resetAction = CommonActions.reset({
+            index: 0,
+            routes: [{name: 'incidents'}],
+          });
+        this.props.navigation.dispatch(resetAction);
     }
     render (){
         return(
@@ -59,7 +95,8 @@ class Splash extends Component {
 function mapStateToProps(state, props) {
     return {
       incidents: state.reducer.incidents,
-      articles: state.reducer.articles
+      articles: state.reducer.articles,
+      user: state.reducer.user
     };
   }
   

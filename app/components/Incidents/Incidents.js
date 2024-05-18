@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import {CommonActions} from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import assets from '../../src/assets'
+import DrawerButton from '../DrawerButton/DrawerButton';
 
 class Incidents extends Component {
     constructor(props) {
@@ -48,6 +49,7 @@ class Incidents extends Component {
         return(
             <SafeAreaView style={styles.body}>
                 <View style = {styles.header}>
+                    <DrawerButton {...this.props}/>
                     <TouchableOpacity
                         onPress={this.refresh}
                         style={styles.button}
@@ -58,7 +60,6 @@ class Incidents extends Component {
                         selectedValue={this.state.status}
                         onValueChange={
                             (itemValue, itemIndex) => {
-                                console.log(itemValue)
                                 this.setState({status: itemValue})
                                 this.props.getIncidents(itemValue)
                             }
