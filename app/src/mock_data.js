@@ -17,7 +17,8 @@ export default mock = {
             "user": "User3",
             "name": "Pip",
             "pass": "0u1",
-            "mark": "2/10"
+            "mark": "2/10",
+            "oversees": ["User2"]
         }
     ],
 

@@ -9,6 +9,7 @@ import Splash from "./components/Splash/splash";
 import Login from "./components/Login/login";
 import Incidents from './components/Incidents/Incidents';
 import IncidentDetail from './components/IncidentDetail/IncidentDetail'
+import KnowledgeBase from './components/KnowledgeBase/knowledge_base';
 import styles from "./styles"
 import {Text, TouchableOpacity} from 'react-native';
 import Users from './components/Users/Users';
@@ -57,12 +58,11 @@ class Main extends Component {
                             routes: [{name: 'incidents'}],
                             });
                             props.navigation.dispatch(resetAction);
-                            props.navigation.closeDrawer();
                         }
                     }
                 >
                     <Text
-                        styles={[styles.buttonText, isIncidents ? styles.textIN : styles.textNIN]}
+                        style={[styles.buttonText, isIncidents ? styles.textIN : styles.textNIN]}
                     >
                         {"incidents"}
                     </Text>
@@ -75,18 +75,38 @@ class Main extends Component {
                             index: 0,
                             routes: [{name: 'users'}],
                             });
-                            props.navigation.dispatch(resetAction);
+                            props.navigation.navigate("users")
+                            //props.navigation.dispatch(resetAction);
                             props.navigation.closeDrawer();
                         }
                     }
                 >
                     <Text
-                        styles={[styles.buttonText, isIncidents ? styles.textIN : styles.textNIN]}
+                        style={[styles.buttonText, isIncidents ? styles.textIN : styles.textNIN]}
                     >
                         {"users"}
                     </Text>
                 </TouchableOpacity>
-                
+                <TouchableOpacity
+                    style={[styles.button, isIncidents ? styles.buttonIN : styles.buttonNIN]}
+                    onPress={
+                        () => {
+                            const resetAction = CommonActions.reset({
+                            index: 0,
+                            routes: [{name: 'knowledge'}],
+                            });
+                            props.navigation.navigate("knowledge")
+                            //props.navigation.dispatch(resetAction);
+                            props.navigation.closeDrawer();
+                        }
+                    }
+                >
+                    <Text
+                        style={[styles.buttonText, isIncidents ? styles.textIN : styles.textNIN]}
+                    >
+                        {"knowledge"}
+                    </Text>
+                </TouchableOpacity>
             </DrawerContentScrollView>
         )
     }
@@ -111,6 +131,7 @@ class Main extends Component {
                     <Drawer.Screen name="incidents" component={Incidents}/>
                     <Drawer.Screen name="incidentDetail" component={IncidentDetail}/>
                     <Drawer.Screen name="users" component={Users}/>
+                    <Drawer.Screen name="knowledge" component={KnowledgeBase}/>
                 </Drawer.Navigator>
                 </NavigationContainer>
             </SafeAreaProvider>

@@ -9,7 +9,6 @@ export const REFRESH_INCIDENT_DETAIL = "REFRESH_INCIDENT_DETAIL";
 export const GET_USERS_FROM_AUTHUSER = "GET_USERS_FROM_AUTHUSER";
 export const CLEANSE_USER_DETAIL = "CLEANSE_USER_DETAIL"; 
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import mock from "../src/mock_data";
 import storage from "../storage/storage";
 
@@ -35,7 +34,6 @@ export  function getUser(user, password){
 export function getArticles(){
     let returnArray = []
     returnArray = mock.articles
-    
     return (dispatch) => {
         dispatch({type: GET_ARTICLES, data: returnArray})
     }
@@ -88,13 +86,13 @@ export function refreshIncidentDetail(incidentId){
     }
 }
 
-export function getUsersFromAuthUser(authUser, targetUser) {
+export function getUserFromAuthUser(authUser, targetUser) {
     
     let returnUser = null
     if (authUser) {
         for (e in mock.users) {
-            if (e.user == targetUser) {
-                returnUser = e
+            if (mock.users[e].user === targetUser) {
+                returnUser = mock.users[e]
             }
         }
     }

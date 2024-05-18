@@ -21,8 +21,10 @@ class Splash extends Component {
     }
 
     async componentDidMount(){
+        this.props.getArticles()
         await storage.load({
-            key: "user"
+            key: "user",
+            id: "name"
         }).then(ret => {
             this.setState({user: ret})
         }).catch(err => {
@@ -32,7 +34,8 @@ class Splash extends Component {
             })
         })
         await storage.load({
-            key: "pass"
+            key: "user",
+            id: "pass"
         }).then(ret => {
             this.setState({pass: ret})
         }).catch(err => {
@@ -44,25 +47,28 @@ class Splash extends Component {
     }
 
     componentDidUpdate(){
-        console.log(this.state)
         if (
-            this.state.pass != null && this.state.user != null
+            this.state.pass != null && this.state.pass != ""
+            && this.state.user != null && this.state.user != ""
         ){
             this.props.getUser(this.state.user, this.state.pass)
+            this.setState({
+                loading: false
+            })
         } else if (this.state.pass == "" && this.state.user == ""){
             this.setState({
                 loading: false
             })
         }
-        if (this.props.articles != [] && this.props.incidents != [] && !this.state.loading){
-            this.goToLogin();
-        } else if (this.props.articles != [] && this.props.incidents != [] && this.props.user != null){
+
+        if (this.props.articles != [] && this.props.incidents != [] && this.props.user != null){
             this.gotoIncidents();
-        }
+        } else if (this.props.articles != [] && this.props.incidents != [] && !this.state.loading){
+            this.goToLogin();
+        } 
     }
 
     goToLogin = () => {
-        console.log("login")
         const resetAction = CommonActions.reset({
             index: 0,
             routes: [{name: 'login'}],
@@ -71,7 +77,6 @@ class Splash extends Component {
     }
 
     gotoIncidents = () => {
-        console.log("incidents")
         const resetAction = CommonActions.reset({
             index: 0,
             routes: [{name: 'incidents'}],

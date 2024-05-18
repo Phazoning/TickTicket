@@ -26,26 +26,30 @@ class Login extends Component {
         this.goToIncidents()
     }
 
+    saveData = async () => {
+        await storage.save({
+            key: "user",
+            id: "name",
+            data: this.state.user
+        }).then(ret => {console.log("user saved!")}).catch(err => {console.log(err)})
+
+        await storage.save({
+            key: "user",
+            id: "pass",
+            data: this.state.pass
+        }).then(ret => {console.log("pass saved!")}).catch(err => {console.log(err)})
+    }
+
     goToIncidents = () => {
         this.props.getUser(this.state.user, this.state.pass)
         if (this.props.user) {
-
-            storage.save({
-                key: "user",
-                id: "name",
-                data: this.state.user
+            this.saveData().then(ret => {
+                const resetAction = CommonActions.reset({
+                    index: 0,
+                    routes: [{name: 'incidents'}],
+                  });
+                this.props.navigation.dispatch(resetAction);
             })
-
-            storage.save({
-                key: "user",
-                id: "pass",
-                data: this.state.pass
-            })
-            const resetAction = CommonActions.reset({
-                index: 0,
-                routes: [{name: 'incidents'}],
-              });
-            this.props.navigation.dispatch(resetAction);
         }
     }
 

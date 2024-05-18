@@ -14,7 +14,7 @@ export default StyleSheet.create({
     },
     buttonText: {
         fontFamily: 'arial',
-        fontColor: "#000000",
+        color: "#000000",
         fontSize: 0.05*height,
     },
     buttonIN: {

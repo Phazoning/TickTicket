@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {SafeAreaView, View, Image, Text, TextInput, TouchableOpacity, FlatList} from 'react-native';
+import {SafeAreaView, View, Image, Text, TextInput, TouchableOpacity, FlatList, ScrollView} from 'react-native';
 import styles from "./styles";
 import * as ReduxActions from '../../redux/actions'
 import {bindActionCreators} from 'redux';
@@ -20,7 +20,8 @@ class Users extends Component {
     }
 
     async componentDidMount(){
-        if (!this.props.user.oversees) {
+        this.props.navigation.closeDrawer()
+        if (!this.props.user.oversees || this.props.user.oversees == []) {
             this.setState({
                 selectedUser: this.props.user
             })
@@ -28,127 +29,98 @@ class Users extends Component {
     }
 
     refresh = async () => {
-        let storedUser = null
-        let storedPass = null
-        await storage.load({
-            key: "user"
-        }).then(ret => {
-            storedUser = ret
-        }).catch(err => {
-            console.log(err)
-        })
-        await storage.load({
-            key: "pass"
-        }).then(ret => {
-            storedPass = ret
-        }).catch(err => {
-            console.log(err)
-        })
-
-        await this.props.getUser(storedUser, storedPass)
+        this.props.getUser(this.props.user.user, this.props.user.pass)
         if (this.state.selectedUser){
-            let userName = this.state.user.user
-
-            await this.setUserDetail(userName)
+            this.props.getUserFromAuthUser(this.props.user, this.state.selectedUser.user)
+            this.setState({
+                selectedUser: this.props.detailUser
+            })
         }
     }
 
-    backButton = () => {
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    this.setState({
-                        selectedUser: null
-                    })
-                    this.props.cleanseUserDetail()
-                }}
-            >
-                <Image source={assets.backImage}/>
-            </TouchableOpacity>
-        )
-    }
-
-    setSelfUserButton = () => {
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    this.setState({
-                        selectedUser: this.props.user
-                    })
-                }}
-            >
-                <Image source={assets.userImage}/>
-            </TouchableOpacity>
-        )
-    }
-
-    userDetailRender = () => {
-        return (
-            <View style={styles.dataScroll}>
-                <View style={styles.dataRow}>
-                    <Text style={[styles.contentTitle, styles.contentText]}>{"Usuario:"}</Text>
-                    <Text style={[styles.contentText, styles.contentDetailText]}>{this.state.user.user}</Text>
-                </View>
-                <View style={styles.dataRow}>
-                    <Text style={[styles.contentTitle, styles.contentText]}>{"Nombre:"}</Text>
-                    <Text style={[styles.contentText, styles.contentDetailText]}>{this.state.user.name}</Text>
-                </View>
-                <View style={styles.dataRow}>
-                    <Text style={[styles.contentTitle, styles.contentText]}>{"Nota"}</Text>
-                    <Text style={[styles.contentText, styles.contentDetailText]}>{this.state.user.mark}</Text>
-                </View>
-                {this.state.oversees && 
-                    <View style={styles.dataRow}>
-                        <Text style={[styles.contentTitle, styles.contentText]}>{"A cargo:"}</Text>
-                        <Text style={[styles.contentText, styles.subordinatesText]}>{this.state.user.oversees.join(", ")}</Text>
-                    </View>
-                }
-            </View>
-        )
-    }
-
-    setUserDetail = async (user) => {
-        await this.props.getUsersFromAuthUser(this.props.user, user)
-        this.setState({
-            selectedUser: this.props.detailUser
-        })
+    isDetail = () => {
+        return this.state.selectedUser != null && this.props.user.oversees && this.props.user.oversees != []
     }
 
     render (){
         return(
             <SafeAreaView style={styles.body}>
                 <View style = {styles.header}>
-                    {!this.state.selectedUser && <DrawerButton {...this.props}/>}
-                    {this.state.selectedUser && !this.state.selectedUser.oversees && <DrawerButton {...this.props}/>}
-                    {this.state.selectedUser && this.state.selectedUser.oversees && this.backButton()}
-                    {this.props.user.oversees && !this.state.selectedUser && this.setSelfUserButton()}
+                    {
+                        !this.isDetail() &&
+                        <DrawerButton {...this.props} style={styles.leftHeaderButton}/>
+                    }
+                    {
+                        this.isDetail() &&
+                        <TouchableOpacity
+                            style={styles.leftHeaderButton}
+                            onPress={() => {
+                                this.setState({
+                                    selectedUser: null
+                                })
+                                this.props.cleanseUserDetail();
+                            }}
+                        >
+                            <Image source={assets.backImage} style={styles.buttonImage} />
+                        </TouchableOpacity>
+                    }
+                    {
+                        !this.isDetail() && this.props.user.oversees && this.props.user.oversees != [] &&
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.setState({selectedUser: this.props.user})
+                                }
+                            }
+                        >
+                            <Image source={assets.userImage} style={styles.buttonImage}/>
+                        </TouchableOpacity>
+                    }
                     <TouchableOpacity
                         onPress={this.refresh}
-                        style={styles.button}
+                        style={styles.rightHeaderButtonHeaderButton}
                         >
-                        <Image source={assets.cycleImage} style={styles.refreshImage}/>
+                        <Image source={assets.cycleImage} style={styles.buttonImage}/>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.core}>
-                    {!this.state.selectedUser && this.props.user.oversees &&
+                    {   
+                        !this.state.selectedUser &&
                         <FlatList
                             data={this.props.user.oversees}
-                            keyExtractor={item => item}
+                            keyExtractor={(item, index) => index.toString()}
+                            style={styles.dataScroll}
                             renderItem={({item}) => (
-                                <View style={styles.listItem}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            this.setDetail(item)
-                                        }
-                                    }
-                                    >
-                                        <Text style={styles.listItemTitleText}>{item}</Text>
-                                    </TouchableOpacity>
-                                </View>
-                        )}
+                                <TouchableOpacity
+                                    style={styles.subordinateDetailButton}
+                                    onPress={
+                                        () => {
+                                            this.props.getUserFromAuthUser(this.props.user, item)
+                                            this.setState({selectedUser: this.props.detailUser})
+                                    }}
+                                >
+                                    <Text style={styles.subordinatesText}>{item}</Text>
+                                </TouchableOpacity>
+                            )}
                         />
                     }
-                    {this.state.selectedUser && this.userDetailRender()}
+                    {
+                        this.state.selectedUser && 
+                        <ScrollView style={styles.dataScroll}>
+                            <View style={styles.dataSection}>
+                                <Text style={styles.sectionDescriptorText}>{"Usuario: "}</Text>
+                                <Text style={styles.sectionContentText}>{this.state.selectedUser.user}</Text>
+                            </View>
+                            <View style={styles.dataSection}>
+                                <Text style={styles.sectionDescriptorText}>{"Nombre: "}</Text>
+                                <Text style={styles.sectionContentText}>{this.state.selectedUser.name}</Text>
+                            </View>
+                            <View style={styles.dataSection}>
+                                <Text style={styles.sectionDescriptorText}>{"Nota: "}</Text>
+                                <Text style={styles.sectionContentText}>{this.state.selectedUser.mark}</Text>
+                            </View>
+                        </ScrollView>
+                    }
+
                 </View>
             </SafeAreaView>
         )
