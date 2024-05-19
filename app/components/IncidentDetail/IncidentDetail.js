@@ -45,7 +45,26 @@ class IncidentDetail extends Component {
             (isStatusChanged && isCommentsChanged && isAsigneeChanged)
         
     }
+
+    componentDidUpdate(){
+        if (this.ischanged() && !this.state.isButtonEnabled) {
+            this.setState({
+                isButtonEnabled: true
+            })
+        }
+    }
     
+    processAlterRequest = () => {
+        let requestBody = {
+            "incident": this.props.incidentDetail.incident,
+            "status": this.state.status,
+            "user": this.state.assignedTo,
+            "comments": this.state.comments
+        }
+        console.log(requestBody)
+        this.props.alterIncident(requestBody)
+    }
+
     render (){
         return(
             <SafeAreaView style={styles.body}>
@@ -121,11 +140,10 @@ class IncidentDetail extends Component {
                     <TouchableOpacity
                         onPress={() => {
                             if(this.state.isButtonEnabled){
-                                this.props.alterIncident(this.state)
+                                this.processAlterRequest()
                             }   
                         }}
                         style={[styles.sendButton, this.ischanged() ? styles.sendButtonEnabled : styles.sendButtonDisabled]}
-                        disabled={this.state.isButtonEnabled}
                     >
                         <Text style={styles.sendButtonText}>{"Modificar"}</Text>
                     </TouchableOpacity>

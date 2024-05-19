@@ -43,7 +43,8 @@ export default StyleSheet.create({
         fontFamily: "arial",
         fontSize: 0.035*height,
         marginVertical: 0.002*height,
-        alignSelf: "center"
+        alignSelf: "center",
+        color: "#000000"
     },
     articleItemBody: {
         paddingHorizontal: 0.009*width,
@@ -51,7 +52,8 @@ export default StyleSheet.create({
     },
     articleItemBodyText: {
         fontFamily: "arial",
-        fontSize: 0.03*height
+        fontSize: 0.03*height,
+        color: "#000000"
     },    
     articleToggleButton: {
         flex: 1,    
@@ -62,6 +64,7 @@ export default StyleSheet.create({
         fontFamily: "arial",
         fontSize: 0.06*height,
         alignSelf: "center",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#000000"
     }
 })

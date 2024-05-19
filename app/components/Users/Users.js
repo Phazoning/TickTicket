@@ -131,7 +131,7 @@ class Users extends Component {
 function mapStateToProps(state, props) {
     return {
         user: state.reducer.user,
-        detailUser: state.reducer.user
+        detailUser: state.reducer.userDetail
     };
   }
   

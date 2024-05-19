@@ -14,7 +14,8 @@ export default StyleSheet.create({
     },
     headerText: {
         fontSize: 0.001* height,
-        fontFamily: "arial"
+        fontFamily: "arial",
+        color: "#000000"
     },
     button: {
         flex: 1,

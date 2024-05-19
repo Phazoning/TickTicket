@@ -50,12 +50,16 @@ class Splash extends Component {
         if (
             this.state.pass != null && this.state.pass != ""
             && this.state.user != null && this.state.user != ""
+            && this.state.loading
         ){
             this.props.getUser(this.state.user, this.state.pass)
+        } else if (this.state.pass == "" && this.state.user == ""){
             this.setState({
                 loading: false
             })
-        } else if (this.state.pass == "" && this.state.user == ""){
+        }
+
+        if (this.props.user){
             this.setState({
                 loading: false
             })

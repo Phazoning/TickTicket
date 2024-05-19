@@ -64,6 +64,7 @@ const reducer = (state = initialState, action) => {
             });
             return state;
         }
+        case ALTER_INCIDENT: {}
         default:
             return state
     }

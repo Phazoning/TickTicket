@@ -24,7 +24,8 @@ export default StyleSheet.create({
     },
     headerText: {
         fontSize: 0.001* height,
-        fontFamily: "arial"
+        fontFamily: "arial",
+        color: "#000000"
     },
     buttonImage: {
         flex: 1,
@@ -43,16 +44,19 @@ export default StyleSheet.create({
     },
 
     contentText: {
-        fontFamily: "arial"
+        fontFamily: "arial",
+        color: "#000000"
     },
 
     contentTitle: {
         fontSize: 0.1*height,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#000000"
     },
 
     contentDetailText: {
-        fontSize: 0.095*height
+        fontSize: 0.095*height,
+        color: "#000000"
     },
 
     subordinatesText: {
@@ -61,7 +65,8 @@ export default StyleSheet.create({
         fontWeight: "bold",
         fontFamily: "arial",
         marginVertical: 0.001*height,
-        marginHorizontal: 0.002*width
+        marginHorizontal: 0.002*width,
+        color: "#000000"
     },
 
     dataScroll: {
@@ -88,12 +93,14 @@ export default StyleSheet.create({
     sectionDescriptorText: {
         fontFamily: "arial",
         fontSize: 0.03*height,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#000000"
     },
     sectionContentText: {
         fontFamily: "arial",
         fontSize: 0.025*height,
-        alignSelf: "flex-end"
+        alignSelf: "flex-end",
+        color: "#000000"
     }
 
 })
