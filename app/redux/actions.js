@@ -7,50 +7,71 @@ export const SET_INCIDENT_FOR_DETAIL = "SET_INCIDENT_FOR_DETAIL";
 export const CLEANSE_INCIDENT_DETAIL = "CLEANSE_INCIDENT_DETAIL";
 export const REFRESH_INCIDENT_DETAIL = "REFRESH_INCIDENT_DETAIL";
 export const GET_USERS_FROM_AUTHUSER = "GET_USERS_FROM_AUTHUSER";
-export const CLEANSE_USER_DETAIL = "CLEANSE_USER_DETAIL"; 
+export const CLEANSE_USER_DETAIL = "CLEANSE_USER_DETAIL";
 
+import { baseURL } from "../src/consts";
 import mock from "../src/mock_data";
-import storage from "../storage/storage";
 
 /**
  * All these functions are to be changed to use the API on the last stage of development
  */
 export  function getUser(user, password){
-    let returnUser = null
-    for (e in mock.users) {
-        let isUser = mock.users[e].user == user
-        let isPass = mock.users[e].pass == password
-        if ( isUser && isPass) {
-            returnUser = mock.users[e]
-        }
-    }
+    
+    let partialURL = "/users/?"
+
+    let nameParameter = "username=" + user
+    let pwdParameter = "&password=" + password
 
     return (dispatch) => {
-        dispatch({type: GET_USER, data: returnUser})
+        fetch(baseURL + partialURL + nameParameter + pwdParameter, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(response => {
+            return response.json()
+        }).then(json => {
+            dispatch({type: GET_USER, data: json})
+        })
     }
-}
+}   
 
 
 export function getArticles(){
-    let returnArray = []
-    returnArray = mock.articles
+
+    let partialURL = "/knowledge/"
+
     return (dispatch) => {
-        dispatch({type: GET_ARTICLES, data: returnArray})
-    }
+        fetch(baseURL + partialURL, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(response => {
+            return response.json()
+        }).then(json => {
+            dispatch({type: GET_ARTICLES, data: json})
+        })
+    } 
 }
 
 export function getIncidents(status){
-    let returnArray = []
-    for (e in mock.incidents){
-        let incidentStatus = mock.incidents[e].status
-        if (incidentStatus == status){
-            returnArray.push(mock.incidents[e])
-        }
-    }
-    
+
+    let partialURL = "/incidents/?status=" + status
+
+
     return (dispatch) => {
-        dispatch({type: GET_INCIDENTS, data: returnArray})
-    }   
+        fetch(baseURL + partialURL, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(response => {
+            return response.json()
+        }).then(json => {
+            dispatch({type: GET_INCIDENTS, data: json})
+        })
+    }
 }
 
 export function setIncidentForDetail(item){
@@ -65,39 +86,45 @@ export function cleanseIncidentDetail(){
     }
 }
 
-/** 
- * Implement with the API implementation, as changes won't be able to be done before that
-*/
 export function alterIncident(alterBody){
-}
 
-export function refreshIncidentDetail(incidentId){
+    let partialURL = "/incidents/alter/"
+    let rBody = JSON.stringify(alterBody)
 
-    let item = null
+    fetch(baseURL + partialURL, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: rBody
+    }).then(response => {
+        return response.json()
+    }).then(json => {
+        console.log(json)
+    })
 
-    for (e in mock.incidents){
-        let elementId = mock.incidents[e].incident
-        if (elementId == incidentId){
-            item = mock.incidents[e]
-        }
-    }
-    return (dispatch) => {
-        dispatch({type: REFRESH_INCIDENT_DETAIL, data: item})
-    }
+    return (dispatch) => {dispatch({type: ALTER_INCIDENT, data: null})}
 }
 
 export function getUserFromAuthUser(authUser, targetUser) {
-    let returnUser = null
-    if (authUser != null) {
-        for (e in mock.users) {
-            if (mock.users[e].user === targetUser) {
-                returnUser = mock.users[e]
-            }
-        }
-    }
+   
+    let partialURL = "/users/detail/?"
+
+    let masterUser = "master=" + authUser.user
+    let masterPwd = "&masterpwd=" + authUser.pass
+    let detailUser = "&detail_user=" + targetUser
 
     return (dispatch) => {
-        dispatch({type: GET_USERS_FROM_AUTHUSER, data: returnUser})
+        fetch(baseURL + partialURL + masterUser + masterPwd + detailUser, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(response => {
+            return response.json()
+        }).then(json => {
+            dispatch({type: GET_USERS_FROM_AUTHUSER, data: json})
+        })
     }
 }
 

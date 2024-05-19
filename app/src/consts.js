@@ -1,0 +1,1 @@
+export const baseURL = "https://serra-mongo.azurewebsites.net"

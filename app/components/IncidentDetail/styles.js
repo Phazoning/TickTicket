@@ -70,7 +70,8 @@ export default StyleSheet.create({
         borderRadius: 15,
         backgroundColor: "#FFFFFF",
         flex: 7,
-        width: "100%"
+        width: "100%",
+        color: "#000000"
     },
     userColumn: {
         flex: 9,
