@@ -21,11 +21,14 @@ class Users extends Component {
 
     async componentDidMount(){
         this.props.navigation.closeDrawer()
-        if (!this.props.user.oversees || this.props.user.oversees == []) {
+        if (this.props.user.oversees == undefined || this.props.user.oversees == []) {
             this.setState({
                 selectedUser: this.props.user
             })
         }
+    }
+
+    componentDidUpdate(){
     }
 
     refresh = async () => {
@@ -95,6 +98,7 @@ class Users extends Component {
                                     onPress={
                                         () => {
                                             this.props.getUserFromAuthUser(this.props.user, item)
+                                            console.log(this.props.detailUser)
                                             this.setState({selectedUser: this.props.detailUser})
                                     }}
                                 >
@@ -131,7 +135,7 @@ class Users extends Component {
 function mapStateToProps(state, props) {
     return {
         user: state.reducer.user,
-        detailUser: state.reducer.user
+        detailUser: state.reducer.userDetail
     };
   }
   

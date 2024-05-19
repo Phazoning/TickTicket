@@ -87,9 +87,8 @@ export function refreshIncidentDetail(incidentId){
 }
 
 export function getUserFromAuthUser(authUser, targetUser) {
-    
     let returnUser = null
-    if (authUser) {
+    if (authUser != null) {
         for (e in mock.users) {
             if (mock.users[e].user === targetUser) {
                 returnUser = mock.users[e]

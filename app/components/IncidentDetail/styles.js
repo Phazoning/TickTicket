@@ -35,7 +35,8 @@ export default StyleSheet.create({
         fontSize: 0.045*height,
         fontWeight: 'bold',
         alignSelf: "center",
-        paddingRight: 0.05*width
+        paddingRight: 0.05*width,
+        color: "#000000"
     },
     statusView: {
         flexDirection: 'row',
@@ -60,7 +61,8 @@ export default StyleSheet.create({
         fontFamily: 'arial',
         fontSize: 0.05*height,
         color: "#000000",
-        alignSelf: "center"
+        alignSelf: "center",
+        color: "#000000"
     },
     textInput: {
         borderWidth: 5,
@@ -89,12 +91,14 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 0.018*height,
         fontFamily: 'arial',
+        color: "#000000"
     },
     contentText: {
         fontSize: 0.015*height,
         fontWeight: 'bold',
         fontFamily: 'arial',
-        alignSelf: "center"
+        alignSelf: "center",
+        color: "#000000"
     },
     columnSection: {
         flex: 1,
@@ -106,6 +110,7 @@ export default StyleSheet.create({
         fontFamily: 'arial',
         width: 0.15*width,
         flex: 1,
-        backgroundColor: "#FFFFFF"
+        backgroundColor: "#FFFFFF",
+        color: "#000000"
     }
 })
