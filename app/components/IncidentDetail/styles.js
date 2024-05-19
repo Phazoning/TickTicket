@@ -61,7 +61,8 @@ export default StyleSheet.create({
         fontFamily: 'arial',
         fontSize: 0.05*height,
         color: "#000000",
-        alignSelf: "center"
+        alignSelf: "center",
+        color: "#000000"
     },
     textInput: {
         borderWidth: 5,

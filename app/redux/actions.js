@@ -107,7 +107,7 @@ export function alterIncident(alterBody){
 }
 
 export function getUserFromAuthUser(authUser, targetUser) {
-    
+   
     let partialURL = "/users/detail/?"
 
     let masterUser = "master=" + authUser.user

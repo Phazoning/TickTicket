@@ -32,7 +32,8 @@ export default StyleSheet.create({
         flex: 2,
         borderWidth: 5,
         marginLeft: 0.2*width,
-        backgroundColor: "#FFFFFF"
+        backgroundColor: "#FFFFFF",
+        color: "#000000"
     },
     core: {
         height: height*0.9,
