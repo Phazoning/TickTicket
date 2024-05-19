@@ -20,7 +20,6 @@ class KnowledgeBase extends Component {
 
     async componentDidMount(){
         this.props.getArticles()
-        console.log(this.props.articles)
     }
 
     componentDidUpdate(){

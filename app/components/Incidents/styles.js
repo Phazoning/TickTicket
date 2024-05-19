@@ -14,7 +14,8 @@ export default StyleSheet.create({
     },
     headerText: {
         fontSize: 0.001* height,
-        fontFamily: "arial"
+        fontFamily: "arial",
+        color: "#000000"
     },
     button: {
         flex: 1,
@@ -31,7 +32,8 @@ export default StyleSheet.create({
         flex: 2,
         borderWidth: 5,
         marginLeft: 0.2*width,
-        backgroundColor: "#FFFFFF"
+        backgroundColor: "#FFFFFF",
+        color: "#000000"
     },
     core: {
         height: height*0.9,

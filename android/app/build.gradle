@@ -103,6 +103,22 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+
+    signingConfigs {
+        release {
+            keyAlias 'releases'
+            keyPassword 'P0RnO53i'
+            storeFile file('release.keystore')
+            storePassword 'P0RnO53i'
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {
