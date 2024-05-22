@@ -80,6 +80,7 @@ class Login extends Component {
                         <TextInput
                             style={styles.textInputItem}
                             placeholder="Usuario"
+                            placeholderTextColor="grey"
                             onChangeText={(text) => {
                                 this.setState({
                                     user: text
@@ -93,6 +94,7 @@ class Login extends Component {
                             secureTextEntry={true}
                             style={styles.textInputItem}
                             placeholder="Contraseña"
+                            placeholderTextColor="grey"
                             onChangeText={(text) => {
                                 this.setState({
                                    pass: text 

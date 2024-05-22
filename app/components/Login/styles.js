@@ -3,7 +3,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 const { width, height} = Dimensions.get('window');
 
 export default StyleSheet.create({
-    body: {flex: 1, alignItems:"center", justifyContent:"center"},
+    body: {flex: 1, alignItems:"center", justifyContent:"center", backgroundColor: ""},
     itemsView: {
         justifyContent: "center",
         paddingVertical: "30%",
@@ -40,6 +40,7 @@ export default StyleSheet.create({
     buttonText: {
         alignSelf: "center",
         fontWeight: "bold", 
-        minHeight: 0.015*height
+        minHeight: 0.015*height, 
+        color: "#000000"
     }
 })
