@@ -122,17 +122,18 @@ class IncidentDetail extends Component {
                             </View>
                             <View style={styles.columnSection}>
                                 <Text style={styles.sectionText}>{"Abierta: "}</Text>
-                            <Text style={styles.contentText}>{this.props.incidentDetail.opened.split("T")[1]}</Text>
+                            <Text style={styles.contentText}>{this.props.incidentDetail.opened.split("T")[0]}</Text>
                             </View>
                             {
                                 this.props.incidentDetail.status == "Closed" &&
                                 <View style={styles.columnSection}>
                                     <Text style={styles.sectionText}>{"Cerrada: "}</Text>
-                                    <Text style={styles.contentText}>{this.props.incidentDetail.closed.split("T")[1]}</Text>
+                                    <Text style={styles.contentText}>{this.props.incidentDetail.closed.split("T")[0]}</Text>
                                 </View>
                             }
                         </View>
                     </View>
+                    <Text style={styles.incidentText}>{this.props.incidentDetail.content}</Text>
                     <TextInput
                         multiline={true}
                         style={styles.textInput}

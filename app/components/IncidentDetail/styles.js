@@ -84,7 +84,7 @@ export default StyleSheet.create({
         flex: 15,
         flexDirection: "column",
         paddingRight: 0.008*width,
-        paddingLeft: 0.1*width,
+        paddingLeft: 0.008*width,
         paddingVertical: 0.025*height
     },
 
@@ -121,5 +121,12 @@ export default StyleSheet.create({
         color: "#000000",
         backgroundColor: "#FFFFFF",
         borderRadius: 20
+    },
+    incidentText: {
+        fontSize: 0.02*height,
+        fontFamily: 'arial',
+        color: "#000000",
+        paddingHorizontal: 0.02*width,
+        marginVertical: 0.03*height
     }
 })
