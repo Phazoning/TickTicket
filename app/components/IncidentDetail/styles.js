@@ -92,14 +92,16 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 0.018*height,
         fontFamily: 'arial',
-        color: "#000000"
+        color: "#000000",
+        flex: 1
     },
     contentText: {
         fontSize: 0.015*height,
         fontWeight: 'bold',
         fontFamily: 'arial',
         alignSelf: "center",
-        color: "#000000"
+        color: "#000000",
+        flex: 1
     },
     columnSection: {
         flex: 1,
@@ -113,5 +115,11 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: "#FFFFFF",
         color: "#000000"
+    },
+    assignButton: {
+        flex: 1,
+        color: "#000000",
+        backgroundColor: "#FFFFFF",
+        borderRadius: 20
     }
 })

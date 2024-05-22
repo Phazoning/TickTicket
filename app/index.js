@@ -64,7 +64,7 @@ class Main extends Component {
                     <Text
                         style={[styles.buttonText, isIncidents ? styles.textIN : styles.textNIN]}
                     >
-                        {"incidents"}
+                        {"Incidencias"}
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -84,7 +84,7 @@ class Main extends Component {
                     <Text
                         style={[styles.buttonText, isIncidents ? styles.textIN : styles.textNIN]}
                     >
-                        {"users"}
+                        {"Usuarios"}
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -104,7 +104,7 @@ class Main extends Component {
                     <Text
                         style={[styles.buttonText, isIncidents ? styles.textIN : styles.textNIN]}
                     >
-                        {"knowledge"}
+                        {"Artículos"}
                     </Text>
                 </TouchableOpacity>
             </DrawerContentScrollView>

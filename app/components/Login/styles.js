@@ -26,7 +26,7 @@ export default StyleSheet.create({
         marginHorizontal: "10%",
         borderColor: "#000000",
         borderWidth: 2,
-        color: "#898B86"
+        color: "#000000"
     },
     button: {
         alignContent: "center",

@@ -10,7 +10,6 @@ export const GET_USERS_FROM_AUTHUSER = "GET_USERS_FROM_AUTHUSER";
 export const CLEANSE_USER_DETAIL = "CLEANSE_USER_DETAIL";
 
 import { baseURL } from "../src/consts";
-import mock from "../src/mock_data";
 
 /**
  * All these functions are to be changed to use the API on the last stage of development

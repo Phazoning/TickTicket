@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {SafeAreaView ,View, Image, Text, TextInput, TouchableOpacity} from 'react-native';
+import {SafeAreaView ,View, Image, Text, TextInput, TouchableOpacity, Keyboard} from 'react-native';
 import styles from "./styles";
 import * as ReduxActions from '../../redux/actions'
 import {bindActionCreators} from 'redux';
@@ -15,15 +15,45 @@ class Login extends Component {
         this.state = {
             user: "",
             pass: "",
+            keyboardUp: false
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
+        this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", this._keyboardDidShow)
+        this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", this._keyboardDidHide)
+    }
 
+    componentWillUnmount(){
+        this.keyboardDidShowListener.remove()
+        this.keyboardDidHideListener.remove()
+    }
+    _keyboardDidShow = () => {
+        this.setState({
+            keyboardUp: true
+        })
+    }
+
+    _keyboardDidHide = () => {
+        this.setState({
+            keyboardUp: false
+        })
+    }
+
+    componentDidUpdate(){
+        if (this.props.user) {
+            this.saveData().then(ret => {
+                const resetAction = CommonActions.reset({
+                    index: 0,
+                    routes: [{name: 'incidents'}],
+                  });
+                this.props.navigation.dispatch(resetAction);
+            })
+        }
     }
 
     click = () => {
-        this.goToIncidents()
+        this.props.getUser(this.state.user, this.state.pass)
     }
 
     saveData = async () => {
@@ -40,18 +70,6 @@ class Login extends Component {
         }).then(ret => {console.log("pass saved!")}).catch(err => {console.log(err)})
     }
 
-    goToIncidents = () => {
-        this.props.getUser(this.state.user, this.state.pass)
-        if (this.props.user) {
-            this.saveData().then(ret => {
-                const resetAction = CommonActions.reset({
-                    index: 0,
-                    routes: [{name: 'incidents'}],
-                  });
-                this.props.navigation.dispatch(resetAction);
-            })
-        }
-    }
 
     render (){
         return(
@@ -82,12 +100,15 @@ class Login extends Component {
                             }}
                         />
                     </View>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={this.click}
-                    >
-                        <Text style={styles.buttonText  }>{"Login"}</Text>
-                    </TouchableOpacity>
+                    {
+                        !this.state.keyboardUp && 
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={this.click}
+                        >
+                            <Text style={styles.buttonText }>{"Login"}</Text>
+                        </TouchableOpacity>
+                    }
                 </View>
             </SafeAreaView>
         )

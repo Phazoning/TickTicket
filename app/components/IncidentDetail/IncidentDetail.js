@@ -20,6 +20,8 @@ class IncidentDetail extends Component {
         };
     }
 
+    componentDidMount = () => {
+    }
 
     componentWillUnmount(){
         this.props.cleanseIncidentDetail();
@@ -58,11 +60,14 @@ class IncidentDetail extends Component {
         let requestBody = {
             "incident": this.props.incidentDetail.incident,
             "status": this.state.status,
-            "user": this.state.assignedTo,
             "comments": this.state.comments
         }
-        console.log(requestBody)
-        this.props.alterIncident(requestBody)
+        if (!this.state.assignedTo){
+            requestBody.user = this.props.user.user
+        }
+        if (requestBody.status == "Closed" && requestBody.comments != ""){
+            this.props.alterIncident(requestBody)
+        } 
     }
 
     render (){
@@ -82,11 +87,12 @@ class IncidentDetail extends Component {
                         <View style={styles.userColumn}>
                             <View style={styles.columnSection}>
                                 <Text style={styles.sectionText}>{"Asignado a:  "}</Text>
-                                <Text style={styles.contentText}>{this.props.incidentDetail["person in charge"]}</Text>
                             </View>
+                            <Text style={styles.contentText}>{this.props.incidentDetail["person in charge"]}</Text> 
                             {
-                                this.state.assignedTo == "None" &&
+                                this.state.assignedTo == "" &&
                                 <TouchableOpacity
+                                    style={styles.assignButton}
                                     onPress={() => {
                                         this.setState({
                                             assignedTo: this.props.user.user
