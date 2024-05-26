@@ -64,7 +64,11 @@ const reducer = (state = initialState, action) => {
             });
             return state;
         }
-        case ALTER_INCIDENT: {}
+        case ALTER_INCIDENT: {
+            state = Object.assign({}, state, {
+                incidentDetail: action.data
+            })
+        }
         default:
             return state
     }

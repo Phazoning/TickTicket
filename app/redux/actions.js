@@ -89,20 +89,36 @@ export function alterIncident(alterBody){
 
     let partialURL = "/incidents/alter/"
     let rBody = JSON.stringify(alterBody)
-
-    fetch(baseURL + partialURL, {
-        method: 'PATCH',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: rBody
-    }).then(response => {
-        return response.json()
-    }).then(json => {
-        console.log(json)
-    })
-
-    return (dispatch) => {dispatch({type: ALTER_INCIDENT, data: null})}
+    console.log(rBody)
+    return (dispatch) => {
+        fetch(baseURL + partialURL, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: rBody
+        }).then(response => {
+            return response.json()
+        }).then(json => {
+            let getURL = baseURL + "/incidents/?status="
+            fetch(getURL + alterBody.status, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(response => {
+                return response.json()
+            }).then(json => {
+                let select = null
+                for (e of json){
+                    if (e.incident == alterBody.incident){
+                        select = e
+                    }
+                }
+                dispatch({type: ALTER_INCIDENT, data: select})
+            })
+        })
+    }
 }
 
 export function getUserFromAuthUser(authUser, targetUser) {

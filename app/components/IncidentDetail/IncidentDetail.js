@@ -13,7 +13,7 @@ class IncidentDetail extends Component {
         super(props);
     
         this.state = {
-            assignedTo: this.props.incidentDetail["person in charge"],
+            assignedTo: this.props.incidentDetail.user,
             status: this.props.incidentDetail.status,
             comments: this.props.incidentDetail.comments,
             isButtonEnabled: false
@@ -38,7 +38,7 @@ class IncidentDetail extends Component {
     ischanged = () => {
         let isStatusChanged = !(this.props.incidentDetail.status == this.state.status)
         let isCommentsChanged = !(this.props.incidentDetail.comments == this.state.comments)
-        let isAsigneeChanged = !(this.props.incidentDetail["person in charge"] == this.state.assignedTo)
+        let isAsigneeChanged = !(this.props.incidentDetail.user == this.state.assignedTo)
 
         return isAsigneeChanged || (isAsigneeChanged && isStatusChanged) ||
             isCommentsChanged || (isCommentsChanged && isAsigneeChanged) ||
@@ -62,10 +62,10 @@ class IncidentDetail extends Component {
             "status": this.state.status,
             "comments": this.state.comments
         }
-        if (!this.state.assignedTo){
+        if (this.state.assignedTo){
             requestBody.user = this.props.user.user
         }
-        if (requestBody.status == "Closed" && requestBody.comments != ""){
+        if ((requestBody.status == "Closed" && requestBody.comments != "") || requestBody.status != "Closed"){
             this.props.alterIncident(requestBody)
         } 
     }
@@ -88,7 +88,9 @@ class IncidentDetail extends Component {
                             <View style={styles.columnSection}>
                                 <Text style={styles.sectionText}>{"Asignado a:  "}</Text>
                             </View>
-                            <Text style={styles.contentText}>{this.props.incidentDetail["person in charge"]}</Text> 
+                            {this.state.assignedTo != "" &&
+                                <Text style={styles.contentText}>{this.state.assignedTo}</Text> 
+                            }
                             {
                                 this.state.assignedTo == "" &&
                                 <TouchableOpacity
@@ -150,7 +152,7 @@ class IncidentDetail extends Component {
                                 this.processAlterRequest()
                             }   
                         }}
-                        style={[styles.sendButton, this.ischanged() ? styles.sendButtonEnabled : styles.sendButtonDisabled]}
+                        style={[styles.sendButton, this.state.isButtonEnabled ? styles.sendButtonEnabled : styles.sendButtonDisabled]}
                     >
                         <Text style={styles.sendButtonText}>{"Modificar"}</Text>
                     </TouchableOpacity>
